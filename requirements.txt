@@ -1,0 +1,6 @@
+pymongo
+flask
+flask_api
+requests
+pymysql
+pyopenssl

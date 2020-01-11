@@ -1,0 +1,5 @@
+host                = "127.0.0.1"
+user                = "root"
+password            = "atul@123"
+database            = "user_db"
+api_key_2factor     = "8080ee60-78bb-11e8-a895-0200cd936042"
