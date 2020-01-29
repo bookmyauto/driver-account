@@ -32,13 +32,13 @@ def working():
 def otp():
     try:
         if request.method == "GET":
-            number  = request.form["number"]
+            number  = request.args["number"]
             logging.debug("incoming request: number = " + str(number))
-            if "otp" not in request.form:
+            if "otp" not in request.args:
                 response = json.dumps(Otp.create_otp(number))
                 return response
             else:
-                user_otp    = request.form["otp"]
+                user_otp    = request.args["otp"]
                 logging.debug("incoming request: otp = " + str(otp))
                 response    = json.dumps(Otp.verify_otp(number, user_otp))
                 return response
@@ -51,15 +51,15 @@ def otp():
 def createdriver():
     try:
         if request.method == "GET":
-            logging.debug("incoming GET request: " + str(dict(request.form)))
-            driver_number     = request.form["number"]
+            logging.debug("incoming GET request: " + str(dict(request.args)))
+            driver_number     = request.args["number"]
             response        = Create.check_driver_repetition(driver_number)
             logging.debug("createdriver returned: " + str(response))
             return response
         if request.method == "POST":
-            logging.debug("incoming POST request: " + str(request.form))
-            driver_name       = request.form["name"]
-            driver_number     = request.form["number"]
+            logging.debug("incoming POST request: " + str(request.args))
+            driver_name       = request.args["name"]
+            driver_number     = request.args["number"]
             response        = Create.create_user(driver_number, driver_name)
             logging.debug("createuser returned:\n" + str(response))
             return response
@@ -71,14 +71,14 @@ def createdriver():
 def updatedriver():
     try:
         if request.method == "POST":
-            number      = request.form["number"]
-            name        = request.form["name"]
-            photo_link  = request.form["profile_pic_link"]
+            number      = request.args["number"]
+            name        = request.args["name"]
+            photo_link  = request.args["profile_pic_link"]
             response    = Create.update_user(number, name, photo_link)
             logging.debug("Responded to update driver request")
             return response
     except RuntimeError as e:
-        logging.critical("failure in v1/updateriver with error: " + str(e) + " |for request: " + str(dict(request.form)))
+        logging.critical("failure in v1/updateriver with error: " + str(e) + " |for request: " + str(dict(request.args)))
         return default_error
 
 
